@@ -26,7 +26,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+import kotlin.math.pow
 import kotlin.math.roundToInt
+import kotlin.math.sqrt
 import kotlin.random.Random
 
 @Composable
@@ -64,6 +66,12 @@ fun TouchScreen() {
                 isTimerRunning = false
             }
 
+
+        }
+        BallClicker(
+            enabled = isTimerRunning
+        ) {
+            points++
 
         }
     }
@@ -116,12 +124,26 @@ fun BallClicker(
                 )
             )
         }
-        Canvas(modifier = Modifier.fillMaxSize()
-            .pointerInput (enabled){
-                if (!enabled){
+        Canvas(modifier = Modifier
+            .fillMaxSize()
+            .pointerInput(enabled) {
+                if (!enabled) {
                     return@pointerInput
                 }
                 detectTapGestures {
+                    val distance = sqrt(
+                        (it.x - ballPosition.x
+                                ).pow(2) * (it.y - ballPosition.y).pow(2)
+                    )
+                    if (distance <= radius) {
+                        ballPosition = randomOffset(
+                            radius = radius,
+                            width = constraints.maxWidth,
+                            height = constraints.maxHeight
+                        )
+                        onBallClick()
+                    }
+
 
                 }
 
