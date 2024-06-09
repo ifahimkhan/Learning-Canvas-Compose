@@ -1,4 +1,4 @@
-package com.fahim.canvas.ui.theme.weightscale
+package com.fahim.canvas.ui.screen.weightscale
 
 import android.health.connect.datatypes.units.Length
 import androidx.compose.ui.graphics.Color

@@ -1,4 +1,4 @@
-package com.fahim.canvas.ui.theme.weightscale
+package com.fahim.canvas.ui.screen.weightscale
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight

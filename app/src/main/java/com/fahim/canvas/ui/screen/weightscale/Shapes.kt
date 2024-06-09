@@ -1,4 +1,4 @@
-package com.fahim.canvas
+package com.fahim.canvas.ui.screen.weightscale
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.padding

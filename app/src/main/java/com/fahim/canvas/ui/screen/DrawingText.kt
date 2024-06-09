@@ -1,4 +1,4 @@
-package com.fahim.canvas
+package com.fahim.canvas.ui.screen
 
 import android.graphics.Color
 import android.graphics.Paint
