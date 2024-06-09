@@ -21,6 +21,8 @@ class MainActivity : ComponentActivity() {
         setContent {
 //            MyCanvas()
 //            TouchScreen()
+//            DrawingText()
+
             WeightScale()
         }
     }
