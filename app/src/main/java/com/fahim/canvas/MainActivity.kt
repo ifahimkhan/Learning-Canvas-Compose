@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.tooling.preview.Preview
 import com.fahim.canvas.ui.theme.CanvasTheme
+import com.fahim.canvas.ui.theme.weightscale.WeightScale
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +21,9 @@ class MainActivity : ComponentActivity() {
         setContent {
 //            MyCanvas()
 //            TouchScreen()
-            DrawingText()
+//            DrawingText()
+
+            WeightScale()
         }
     }
 }
