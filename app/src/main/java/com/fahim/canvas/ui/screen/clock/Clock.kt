@@ -3,6 +3,7 @@ package com.fahim.canvas.ui.screen.clock
 import android.graphics.Color.WHITE
 import android.graphics.Color.argb
 import android.graphics.Paint
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -26,6 +27,7 @@ fun Clock(
     hours: Float = 0f,
     radius: Dp = 100.dp
 ) {
+    Log.e("TAG", "Clock: ${hours} min $minutes sec: $seconds", )
     Canvas(modifier = Modifier.size(radius * 2f)) {
         drawContext.canvas.nativeCanvas.apply {
             drawCircle(
@@ -67,7 +69,7 @@ fun Clock(
 
         rotate(degrees = seconds * (360f / 60f)) {
             drawLine(
-                color = androidx.compose.ui.graphics.Color.Red,
+                color = Color.Red,
                 start = center,
                 end = Offset(center.x, 20.dp.toPx()),
                 strokeWidth = 2.dp.toPx(),
@@ -83,7 +85,7 @@ fun Clock(
                 cap = StrokeCap.Round
             )
         }
-        rotate(degrees = hours * (360f / 60f)) {
+        rotate(degrees = hours * (360f / 12f)) {
             drawLine(
                 color = Color.Black,
                 start = center,

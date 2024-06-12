@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.delay
+import java.util.Calendar
 
 @Composable
 fun ClockScreen() {
@@ -20,31 +21,34 @@ fun ClockScreen() {
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        val milliseconds = remember {
-            System.currentTimeMillis()
+        var currentTime = remember {
+            Calendar.getInstance()
         }
         var seconds by remember {
-            mutableStateOf((milliseconds / 1000f) % 60f)
+            mutableStateOf(currentTime.get(Calendar.SECOND).toFloat())
         }
         var minutes by remember {
-            mutableStateOf(((milliseconds / 1000f) / 60f) % 60f)
+            mutableStateOf(currentTime.get(Calendar.MINUTE).toFloat())
         }
         var hours by remember {
-            mutableStateOf(((milliseconds / 1000f) / 3600f) % 60f)
+            mutableStateOf(currentTime.get(Calendar.HOUR_OF_DAY).toFloat())
         }
 
-        LaunchedEffect(key1 = seconds) {
+        LaunchedEffect(seconds) {
             delay(1000L)
-            minutes += 1f / 60f
-            hours += 1f / (60f * 60f * 12f)
-            seconds += 1f
+            currentTime = Calendar.getInstance()
+            seconds = currentTime.get(Calendar.SECOND).toFloat()
+            minutes = currentTime.get(Calendar.MINUTE).toFloat()
+            hours = currentTime.get(Calendar.HOUR_OF_DAY).toFloat()
+
+
         }
+
         Clock(
             seconds = seconds,
             minutes = minutes,
             hours = hours
         )
-
     }
 }
 
