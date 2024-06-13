@@ -2,7 +2,6 @@ package com.fahim.canvas.ui.screen.weightscale
 
 import android.graphics.Color
 import android.graphics.Paint
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +21,9 @@ import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.fillMaxSize
+
 
 @Composable
 fun Scale(
@@ -50,6 +52,7 @@ fun Scale(
         mutableStateOf(angle)
     }
     Canvas(modifier = modifier
+        .fillMaxSize()
         .pointerInput(true) {
             detectDragGestures(
                 onDragStart = {

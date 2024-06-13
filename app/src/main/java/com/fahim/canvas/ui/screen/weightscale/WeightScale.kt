@@ -1,9 +1,7 @@
 package com.fahim.canvas.ui.screen.weightscale
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -15,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Preview
 @Composable
 fun WeightScale() {
     var weight by remember {
@@ -27,7 +24,7 @@ fun WeightScale() {
                 scaleWidth = 150.dp
             ),
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .height(300.dp)
                 .align(Alignment.BottomCenter)
         ) {
@@ -35,5 +32,12 @@ fun WeightScale() {
 
         }
     }
+
+}
+
+@Preview
+@Composable
+private fun Preview_WeightScale() {
+    WeightScale()
 
 }

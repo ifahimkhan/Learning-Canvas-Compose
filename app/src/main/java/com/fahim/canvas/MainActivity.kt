@@ -23,8 +23,8 @@ class MainActivity : ComponentActivity() {
 //            MyCanvas()
 //            TouchScreen()
 //            DrawingText()
-//            WeightScale()
-            ClockScreen()
+            WeightScale()
+//            ClockScreen()
         }
     }
 }
