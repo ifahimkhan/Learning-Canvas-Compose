@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.tooling.preview.Preview
 import com.fahim.canvas.ui.screen.clock.ClockScreen
+import com.fahim.canvas.ui.screen.drawPath.AnimatingPath
+import com.fahim.canvas.ui.screen.drawPath.DrawPath
 import com.fahim.canvas.ui.theme.CanvasTheme
 import com.fahim.canvas.ui.screen.weightscale.WeightScale
 
@@ -23,8 +25,10 @@ class MainActivity : ComponentActivity() {
 //            MyCanvas()
 //            TouchScreen()
 //            DrawingText()
-            WeightScale()
+//            WeightScale()
 //            ClockScreen()
+//            DrawPath()
+            AnimatingPath()
         }
     }
 }
