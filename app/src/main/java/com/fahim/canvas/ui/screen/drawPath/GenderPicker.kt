@@ -1,5 +1,7 @@
 package com.fahim.canvas.ui.screen.drawPath
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +13,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.clipPath
@@ -35,7 +36,7 @@ fun GenderPicker(
     onGenderSelected: (Gender) -> Unit
 ) {
     var selectedGender by remember {
-        mutableStateOf(Gender.Female)
+        mutableStateOf<Gender>(Gender.Female)
     }
     var center by remember {
         mutableStateOf(Offset.Unspecified)
@@ -55,10 +56,53 @@ fun GenderPicker(
     val femalePathBounds = remember {
         femalePath.getBounds()
     }
+    val maleTranslationOffset by remember {
+        mutableStateOf(Offset.Zero)
+    }
+    val femaleTranslationOffset by remember {
+        mutableStateOf(Offset.Zero)
+    }
+    var currentClickOffset by remember {
+        mutableStateOf(Offset.Zero)
+    }
+    val maleSelectionRadius = animateFloatAsState(
+        targetValue = if (selectedGender is Gender.Male) 80f else 0f,
+        animationSpec = tween(durationMillis = 500), label = "male"
+    )
+    val femaleSelectionRadius = animateFloatAsState(
+        targetValue = if (selectedGender is Gender.Female) 80f else 0f,
+        animationSpec = tween(durationMillis = 500), label = "Female"
+    )
 
 
-
-    Canvas(modifier = modifier) {
+    Canvas(modifier = modifier
+        .pointerInput(true) {
+            detectTapGestures {
+                val transformedMaleRect = Rect(
+                    offset = maleTranslationOffset,
+                    size = malePathBounds.size * pathScaleFactor
+                )
+                val transformedFemaleRect = Rect(
+                    offset = femaleTranslationOffset,
+                    size = femalePathBounds.size * pathScaleFactor
+                )
+                if (
+                    selectedGender !is Gender.Male &&
+                    transformedFemaleRect.contains(it)
+                ) {
+                    currentClickOffset = it
+                    selectedGender = Gender.Male
+                    onGenderSelected(Gender.Male)
+                } else if (
+                    selectedGender !is Gender.Female &&
+                    transformedFemaleRect.contains(it)
+                ) {
+                    currentClickOffset = it
+                    selectedGender = Gender.Female
+                    onGenderSelected(Gender.Female)
+                }
+            }
+        }) {
         center = this.center
         val maleTranslationOffset = Offset(
             x = center.x - malePathBounds.width * pathScaleFactor - distanceBetweenGender.toPx() / 2f,
@@ -68,6 +112,19 @@ fun GenderPicker(
             x = center.x + distanceBetweenGender.toPx() / 2f,
             y = center.y - pathScaleFactor * femalePathBounds.height / 2f
         )
+        val untransformedMaleClickOffset = if (currentClickOffset == Offset.Zero) {
+            malePathBounds.center
+        } else {
+            (currentClickOffset - maleTranslationOffset) / pathScaleFactor
+        }
+        val untransformedFemaleClickOffset = if (currentClickOffset == Offset.Zero) {
+            femalePathBounds.center
+        } else {
+            (currentClickOffset - femaleTranslationOffset) / pathScaleFactor
+        }
+
+
+
         translate(left = maleTranslationOffset.x, top = maleTranslationOffset.y) {
             scale(
                 scale = pathScaleFactor,
@@ -83,11 +140,11 @@ fun GenderPicker(
                     drawCircle(
                         brush = Brush.radialGradient(
                             colors = maleGradient,
-                            center = malePathBounds.center,
-                            radius = 400f,
+                            center = untransformedMaleClickOffset,
+                            radius = maleSelectionRadius.value + 1f,
                         ),
-                        radius = 400f,
-                        center = malePathBounds.center
+                        radius = maleSelectionRadius.value,
+                        center = untransformedMaleClickOffset
                     )
                 }
             }
@@ -111,11 +168,11 @@ fun GenderPicker(
                     drawCircle(
                         brush = Brush.radialGradient(
                             colors = femaleGradient,
-                            center = femalePathBounds.center,
-                            radius = 400f,
+                            center = untransformedFemaleClickOffset,
+                            radius = femaleSelectionRadius.value + 1f,
                         ),
-                        radius = 400f,
-                        center = femalePathBounds.center
+                        radius = femaleSelectionRadius.value,
+                        center = untransformedFemaleClickOffset
                     )
                 }
             }
