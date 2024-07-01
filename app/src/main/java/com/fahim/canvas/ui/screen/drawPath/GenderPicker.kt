@@ -88,7 +88,7 @@ fun GenderPicker(
                 )
                 if (
                     selectedGender !is Gender.Male &&
-                    transformedFemaleRect.contains(it)
+                    transformedMaleRect.contains(it)
                 ) {
                     currentClickOffset = it
                     selectedGender = Gender.Male
